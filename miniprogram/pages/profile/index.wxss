@@ -12,3 +12,20 @@
 .notification-icon { font-size:42rpx; }
 .hint { display:block; margin-top:16rpx; color:#b09691; font-size:21rpx; line-height:1.5; }
 .footer { padding:34rpx 0; color:#bc9c96; text-align:center; font-size:22rpx; }
+
+.gender-actions { margin-top: 18rpx; }
+.gender-button { flex: 1; }
+.blue-button { border-color: #d6e8fb; background: #f0f7ff; color: #638bb6; }
+.period-date-row { margin-top: 12rpx; }
+.period-date-row .field { color: #725650; }
+.forecast-card { display: flex; flex-direction: column; gap: 10rpx; margin-top: 20rpx; padding: 22rpx; border-radius: 24rpx; background: #fff5f2; color: #8a6963; font-size: 24rpx; line-height: 1.5; }
+.forecast-number { color: #ed7787; font-size: 34rpx; font-weight: 800; }
+.theme-blue { background: #f2f8ff; }
+.theme-blue .title, .theme-blue .section-title { color: #3c526a; }
+.theme-blue .primary { background: linear-gradient(100deg, #8bb9ea, #6a9fd8); box-shadow: 0 10rpx 22rpx rgba(91, 143, 198, .18); }
+.theme-blue .soft-button { border-color: #d8e9fa; background: #eff7ff; color: #638bb6; }
+.theme-blue .forecast-card { background: #edf6ff; color: #627f9e; }
+.theme-blue .forecast-number { color: #6199d3; }
+
+.gender-button.chosen { background:#ffe6e8; border-color:#f6cbd0; color:#d86779; }
+.blue-button.chosen-blue { background:#e5f1ff; border-color:#c7ddf5; color:#5889bd; }

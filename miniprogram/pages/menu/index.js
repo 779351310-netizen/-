@@ -11,7 +11,8 @@ Page({
     cart: [],
     note: '',
     total: 0,
-    loading: true
+    loading: true,
+    gender: 'female'
   },
 
   onShow() {
@@ -32,6 +33,7 @@ Page({
         loading: false,
         paired: !!data.couple,
         role: data.profile ? data.profile.role : 'diner',
+        gender: data.profile ? data.profile.gender || 'female' : 'female',
         dishes: data.dishes || []
       }, function () { page.filter(); });
     }).catch(function (error) {

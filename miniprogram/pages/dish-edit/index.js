@@ -11,10 +11,13 @@ Page({
     photoPath: '',
     photoFileID: '',
     isAvailable: true,
+    periodFriendly: false,
+    gender: 'female',
     saving: false
   },
 
   onLoad(options) {
+    this.setData({ gender: getApp().globalData.gender || 'female' });
     if (options.id) {
       const page = this;
       api.call('menu').then(function (data) {
@@ -23,7 +26,7 @@ Page({
           dishId: dish._id, name: dish.name, category: dish.category,
           minutes: String(dish.minutes || 30), description: dish.description || '',
           photoPath: dish.photoUrl || '', photoFileID: dish.photoFileID || '',
-          isAvailable: dish.isAvailable !== false
+          isAvailable: dish.isAvailable !== false, periodFriendly: dish.periodFriendly === true
         });
       }).catch(function (error) { wx.showToast({ title: error.message, icon: 'none' }); });
     }
@@ -34,6 +37,7 @@ Page({
   descriptionInput(event) { this.setData({ description: event.detail.value }); },
   categoryChange(event) { this.setData({ category: this.data.categories[Number(event.detail.value)] }); },
   toggleAvailable(event) { this.setData({ isAvailable: event.detail.value }); },
+  togglePeriodFriendly(event) { this.setData({ periodFriendly: event.detail.value }); },
 
   choosePhoto() {
     const page = this;
@@ -78,7 +82,8 @@ Page({
         minutes: minutes,
         description: page.data.description.trim().slice(0, 120),
         photoFileID: fileID || '',
-        isAvailable: page.data.isAvailable
+        isAvailable: page.data.isAvailable,
+        periodFriendly: page.data.periodFriendly
       });
     }).then(function () {
       wx.hideLoading();

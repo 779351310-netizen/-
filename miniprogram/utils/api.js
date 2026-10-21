@@ -10,6 +10,7 @@ function call(action, payload) {
   }).then(function (response) {
     const result = response.result || {};
     if (!result.ok) throw new Error(result.message || '请求失败，请稍后重试。');
+    if (result.data && result.data.profile && app.applyGenderTheme) app.applyGenderTheme(result.data.profile.gender);
     return result.data;
   });
 }

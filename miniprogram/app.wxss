@@ -25,3 +25,11 @@ button::after { border: 0; }
 .field { width: 100%; margin-top: 12rpx; padding: 22rpx 24rpx; border: 2rpx solid #f7e9e7; border-radius: 22rpx; background: #fffaf9; color: #513d39; font-size: 28rpx; }
 .divider { height: 1rpx; margin: 22rpx 0; background: #f4eae8; }
 .empty { padding: 62rpx 20rpx; text-align: center; color: #a58b86; line-height: 1.8; }
+
+.theme-blue { background: #f2f8ff; }
+.theme-blue .hero { background: linear-gradient(135deg, #e2efff, #d5eaff); }
+.theme-blue .primary { background: linear-gradient(100deg, #8bb9ea, #6a9fd8); box-shadow: 0 10rpx 22rpx rgba(91, 143, 198, .18); }
+.theme-blue .soft-button, .theme-blue .pill, .theme-blue .status-chip { border-color: #d8e9fa; background: #eff7ff; color: #638bb6; }
+.theme-blue .title, .theme-blue .section-title { color: #3c526a; }
+.theme-blue .forecast-card { background: #edf6ff; color: #627f9e; }
+.theme-blue .forecast-number { color: #6199d3; }

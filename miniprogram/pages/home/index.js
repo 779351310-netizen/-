@@ -8,7 +8,8 @@ Page({
     profile: null,
     dishes: [],
     orders: [],
-    pendingCount: 0
+    pendingCount: 0,
+    gender: 'female'
   },
 
   onShow() { this.load(); },
@@ -25,6 +26,7 @@ Page({
         paired: !!data.couple,
         couple: data.couple,
         profile: data.profile,
+        gender: data.profile ? data.profile.gender || 'female' : 'female',
         dishes: data.dishes || [],
         orders: data.orders || [],
         pendingCount: (data.orders || []).filter(function (order) {

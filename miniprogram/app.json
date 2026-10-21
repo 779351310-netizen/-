@@ -2,6 +2,7 @@
   "pages": [
     "pages/home/index",
     "pages/menu/index",
+    "pages/discover/index",
     "pages/orders/index",
     "pages/profile/index",
     "pages/dish-edit/index"
@@ -19,10 +20,26 @@
     "backgroundColor": "#fffdfc",
     "borderStyle": "white",
     "list": [
-      { "pagePath": "pages/home/index", "text": "家" },
-      { "pagePath": "pages/menu/index", "text": "菜单" },
-      { "pagePath": "pages/orders/index", "text": "订单" },
-      { "pagePath": "pages/profile/index", "text": "我的" }
+      {
+        "pagePath": "pages/home/index",
+        "text": "家"
+      },
+      {
+        "pagePath": "pages/menu/index",
+        "text": "菜单"
+      },
+      {
+        "pagePath": "pages/discover/index",
+        "text": "推荐"
+      },
+      {
+        "pagePath": "pages/orders/index",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的"
+      }
     ]
   },
   "sitemapLocation": "sitemap.json",

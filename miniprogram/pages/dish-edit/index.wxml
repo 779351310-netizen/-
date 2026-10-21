@@ -1,4 +1,4 @@
-<view class="page">
+<view class="page {{gender === 'male' ? 'theme-blue' : ''}}">
   <view class="eyebrow">把喜欢的味道，放进你们的菜单</view>
   <text class="title">添加一道菜</text>
   <text class="subtitle">记下做法灵感，也可以上传手机里的成品照片。</text>
@@ -29,6 +29,13 @@
     </view>
     <text class="label">给另一半的小介绍</text>
     <textarea class="field description" maxlength="120" placeholder="这道菜有什么特别？辣度、口感或推荐搭配…" value="{{description}}" bindinput="descriptionInput" />
+    <view class="row between available-row">
+      <view>
+        <text class="label">标记为经期友好</text>
+        <text class="small muted">推荐页会在预计经期前两天优先展示这道菜</text>
+      </view>
+      <switch checked="{{periodFriendly}}" color="#f17a8c" bindchange="togglePeriodFriendly" />
+    </view>
     <view class="row between available-row">
       <view>
         <text class="label">今天可以点</text>

@@ -54,6 +54,49 @@ function decorateOrders(rows) {
   });
 }
 
+function visibleCouple(couple, user) {
+  const safe = Object.assign({}, couple || {});
+  if (!user || user.gender !== 'female') delete safe.periodStarts;
+  return safe;
+}
+
+function periodForecast(couple) {
+  const starts = (couple && couple.periodStarts || []).slice().sort();
+  if (starts.length < 3) return { ready: false, loggedCount: starts.length };
+  const dates = starts.slice(-3).map(function (value) {
+    const parts = String(value).split('-').map(Number);
+    return parts.length === 3 ? Date.UTC(parts[0], parts[1] - 1, parts[2]) : NaN;
+  });
+  if (dates.some(function (value) { return !Number.isFinite(value); })) return { ready: false, loggedCount: starts.length };
+  const intervals = [Math.round((dates[1] - dates[0]) / 86400000), Math.round((dates[2] - dates[1]) / 86400000)];
+  if (intervals.some(function (days) { return days < 15 || days > 60; })) return { ready: false, loggedCount: starts.length };
+  const averageCycleDays = Math.round((intervals[0] + intervals[1]) / 2);
+  const nextStart = new Date(dates[2] + averageCycleDays * 86400000);
+  const today = new Date();
+  const todayStart = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+  return {
+    ready: true,
+    averageCycleDays: averageCycleDays,
+    nextStart: nextStart.toISOString().slice(0, 10),
+    daysUntil: Math.round((nextStart.getTime() - todayStart) / 86400000),
+    loggedCount: starts.length
+  };
+}
+
+async function discover(openid) {
+  const access = await requireProfile(openid);
+  const forecast = periodForecast(access.couple);
+  const result = await db.collection('dishes').where({ coupleId: access.user.coupleId, isAvailable: true }).limit(100).get();
+  const dishes = result.data.filter(function (dish) { return dish.periodFriendly === true; });
+  return {
+    profile: access.user,
+    couple: visibleCouple(access.couple, access.user),
+    periodForecast: forecast,
+    periodWindow: forecast.ready && forecast.daysUntil >= 0 && forecast.daysUntil <= 2,
+    dishes: await photoUrls(dishes)
+  };
+}
+
 async function home(openid) {
   const user = await getUser(openid);
   if (!user || !user.coupleId) return { profile: user || null, couple: null, dishes: [], orders: [] };
@@ -63,7 +106,7 @@ async function home(openid) {
   const togetherDays = couple.anniversaryDate ? Math.max(0, Math.floor((Date.now() - new Date(couple.anniversaryDate).getTime()) / 86400000)) : 0;
   return {
     profile: user,
-    couple: Object.assign({}, couple, { memberCount: (couple.members || []).length, daysTogether: togetherDays }),
+    couple: Object.assign({}, visibleCouple(couple, user), { memberCount: (couple.members || []).length, daysTogether: togetherDays }),
     dishes: await photoUrls(dishResult.data),
     orders: decorateOrders(await photoUrls(orderResult.data))
   };
@@ -72,20 +115,25 @@ async function home(openid) {
 async function menu(openid) {
   const access = await requireProfile(openid);
   const result = await db.collection('dishes').where({ coupleId: access.user.coupleId }).orderBy('createdAt', 'desc').limit(100).get();
-  return { profile: access.user, couple: access.couple, dishes: await photoUrls(result.data) };
+  return { profile: access.user, couple: visibleCouple(access.couple, access.user), dishes: await photoUrls(result.data) };
 }
 
 async function orders(openid) {
   const access = await requireProfile(openid);
   const result = await db.collection('orders').where({ coupleId: access.user.coupleId }).orderBy('createdAt', 'desc').limit(50).get();
-  return { profile: access.user, couple: access.couple, orders: decorateOrders(await photoUrls(result.data)) };
+  return { profile: access.user, couple: visibleCouple(access.couple, access.user), orders: decorateOrders(await photoUrls(result.data)) };
 }
 
 async function profile(openid) {
   const user = await getUser(openid);
-  if (!user || !user.coupleId) return { profile: user || null, couple: null };
+  if (!user || !user.coupleId) return { profile: user || null, couple: null, periodForecast: null, periodStarts: [] };
   const couple = (await db.collection('couples').doc(user.coupleId).get()).data;
-  return { profile: user, couple: Object.assign({}, couple, { memberCount: (couple.members || []).length }) };
+  return {
+    profile: user,
+    couple: Object.assign({}, visibleCouple(couple, user), { memberCount: (couple.members || []).length }),
+    periodForecast: periodForecast(couple),
+    periodStarts: user.gender === 'female' ? (couple.periodStarts || []).slice(-3) : []
+  };
 }
 
 function makeInviteCode() {
@@ -105,7 +153,7 @@ async function createCouple(openid) {
     data: { members: [openid], ownerOpenid: openid, partnerOpenid: '', inviteCode: code, anniversaryDate: '', createdAt: now() }
   });
   await db.collection('users').doc(openid).set({
-    data: { coupleId: created._id, role: 'chef', nickname: '厨房主理人', readyGrantCount: 0, createdAt: now() }
+    data: { coupleId: created._id, role: 'chef', gender: '', nickname: '厨房主理人', readyGrantCount: 0, createdAt: now() }
   });
   return { coupleId: created._id, inviteCode: code };
 }
@@ -122,7 +170,7 @@ async function joinCouple(openid, inviteCode) {
     data: { members: _.push(openid), partnerOpenid: openid, updatedAt: now() }
   });
   await db.collection('users').doc(openid).set({
-    data: { coupleId: couple._id, role: 'diner', nickname: '今天吃货', readyGrantCount: 0, createdAt: now() }
+    data: { coupleId: couple._id, role: 'diner', gender: '', nickname: '今天吃货', readyGrantCount: 0, createdAt: now() }
   });
   return { coupleId: couple._id };
 }
@@ -139,6 +187,7 @@ async function saveDish(openid, event) {
     minutes: Math.max(1, Math.min(600, Number(event.minutes) || 30)),
     description: String(event.description || '').trim().slice(0, 120),
     photoFileID: String(event.photoFileID || ''),
+    periodFriendly: event.periodFriendly === true,
     isAvailable: event.isAvailable !== false,
     updatedAt: now()
   };
@@ -231,6 +280,37 @@ async function saveSubscription(openid) {
   return { readyGrantCount: (user.readyGrantCount || 0) + 1 };
 }
 
+async function setGender(openid, gender) {
+  const user = await getUser(openid);
+  if (!user || !user.coupleId) fail('先加入小厨房。');
+  if (!['female', 'male'].includes(gender)) fail('请选择女生或男生主题。');
+  await db.collection('users').doc(openid).update({ data: { gender: gender } });
+  return { gender: gender };
+}
+
+async function savePeriodStarts(openid, starts) {
+  const access = await requireProfile(openid);
+  if (access.user.gender !== 'female') fail('只有女生可以录入生理期记录。');
+  if (!Array.isArray(starts) || starts.length !== 3) fail('请录入最近三次生理期开始日期。');
+  const normalized = starts.map(function (value) { return String(value || '').trim(); }).sort();
+  if (normalized.some(function (value) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return true;
+    const parsed = new Date(value + 'T00:00:00Z');
+    return isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== value;
+  })) {
+    fail('日期格式不正确，请重新选择。');
+  }
+  if (new Set(normalized).size !== 3) fail('三次开始日期需要各不相同。');
+  if (Date.parse(normalized[2] + 'T00:00:00Z') > Date.now()) fail('开始日期不能晚于今天。');
+  const intervals = [
+    Math.round((Date.parse(normalized[1] + 'T00:00:00Z') - Date.parse(normalized[0] + 'T00:00:00Z')) / 86400000),
+    Math.round((Date.parse(normalized[2] + 'T00:00:00Z') - Date.parse(normalized[1] + 'T00:00:00Z')) / 86400000)
+  ];
+  if (intervals.some(function (days) { return days < 15 || days > 60; })) fail('日期间隔看起来不太像一个周期，请检查后再保存。');
+  await db.collection('couples').doc(access.user.coupleId).update({ data: { periodStarts: normalized, periodUpdatedAt: now() } });
+  return { periodStarts: normalized, periodForecast: periodForecast(Object.assign({}, access.couple, { periodStarts: normalized })) };
+}
+
 async function setRole(openid, role) {
   const user = await getUser(openid);
   if (!user || !user.coupleId) fail('先加入小厨房。');
@@ -255,6 +335,7 @@ exports.main = async function (event) {
     switch (event.action) {
       case 'home': data = await home(openid); break;
       case 'menu': data = await menu(openid); break;
+      case 'discover': data = await discover(openid); break;
       case 'orders': data = await orders(openid); break;
       case 'profile': data = await profile(openid); break;
       case 'createCouple': data = await createCouple(openid); break;
@@ -264,6 +345,8 @@ exports.main = async function (event) {
       case 'updateOrder': data = await updateOrder(openid, event); break;
       case 'saveSubscription': data = await saveSubscription(openid); break;
       case 'setRole': data = await setRole(openid, event.role); break;
+      case 'setGender': data = await setGender(openid, event.gender); break;
+      case 'savePeriodStarts': data = await savePeriodStarts(openid, event.periodStarts); break;
       case 'setNickname': data = await setNickname(openid, event.nickname); break;
       default: fail('暂不支持这个操作。');
     }

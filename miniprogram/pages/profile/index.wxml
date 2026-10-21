@@ -1,4 +1,4 @@
-<view class="page">
+<view class="page {{profile && profile.gender === 'male' ? 'theme-blue' : ''}}">
   <view class="profile-hero">
     <view class="avatar-large">♡</view>
     <text class="eyebrow">只属于你们的两人食堂</text>
@@ -18,6 +18,13 @@
   </view>
 
   <view class="card" wx:if="{{paired}}">
+    <text class="section-title">性别与主题</text>
+    <text class="subtitle">女生使用淡粉色，男生使用淡蓝色。</text>
+    <view class="row gap gender-actions">
+      <button class="soft-button gender-button {{profile.gender === 'female' ? 'chosen' : ''}}" data-gender="female" bindtap="setGender">女生 · 淡粉</button>
+      <button class="soft-button gender-button blue-button {{profile.gender === 'male' ? 'chosen-blue' : ''}}" data-gender="male" bindtap="setGender">男生 · 淡蓝</button>
+    </view>
+    <view class="divider"></view>
     <view class="row between">
       <view>
         <text class="section-title">今天轮到谁下厨？</text>
@@ -39,7 +46,33 @@
     </view>
   </view>
 
-  <view class="card">
+  <view class="card" wx:if="{{paired && profile.gender === 'female'}}">
+    <text class="section-title">生理期记录</text>
+    <text class="subtitle">录入最近三次开始日期，按平均周期推算下一次。日期仅向女生本人显示。</text>
+    <view class="period-date-row" wx:for="{{periodStarts}}" wx:for-index="index" wx:key="*this">
+      <text class="label">第 {{index + 1}} 次开始日期</text>
+      <picker mode="date" value="{{item}}" data-index="{{index}}" bindchange="periodDateChange">
+        <view class="field">{{item || '选择日期'}}　⌄</view>
+      </picker>
+    </view>
+    <button class="soft-button profile-action" bindtap="savePeriodStarts">保存三次记录</button>
+    <view class="forecast-card" wx:if="{{periodForecast && periodForecast.ready}}">
+      <text>平均周期约 <text class="forecast-number">{{periodForecast.averageCycleDays}}</text> 天</text>
+      <text>预计下次开始：{{periodForecast.nextStart}}（约 {{periodForecast.daysUntil}} 天后）</text>
+    </view>
+    <text class="hint">周期推算仅供日常安排参考，可能存在波动。</text>
+  </view>
+
+  <view class="card" wx:if="{{paired && profile.gender === 'male'}}">
+    <text class="section-title">周期温柔提醒</text>
+    <view class="forecast-card" wx:if="{{periodForecast && periodForecast.ready}}">
+      <text>预计下次生理期：{{periodForecast.nextStart}}</text>
+      <text>约 {{periodForecast.daysUntil}} 天后，推荐页会在前两天突出经期友好菜品。</text>
+    </view>
+    <text class="subtitle" wx:else>女生录入三次生理期开始日期后，推荐页会在预计前两天展示菜单推荐。</text>
+  </view>
+
+  <view class="card" wx:if="{{paired}}">
     <view class="row between">
       <view>
         <text class="section-title">饭菜做好提醒</text>

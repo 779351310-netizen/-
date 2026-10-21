@@ -1,0 +1,51 @@
+<view class="page {{gender === 'male' ? 'theme-blue' : ''}}">
+  <view class="eyebrow">和喜欢的人，好好吃饭</view>
+  <text class="title">发现幸福饭记</text>
+  <text class="subtitle">按你们一起标记的菜品，准备今天的小惊喜。</text>
+
+  <view wx:if="{{loading}}" class="empty">正在为你们准备推荐…</view>
+  <view wx:elif="{{!paired}}" class="card empty">
+    <text class="empty-emoji">💌</text>
+    <text class="section-title">加入小厨房后查看推荐</text>
+    <button class="primary empty-button" bindtap="goProfile">去创建 / 加入</button>
+  </view>
+
+  <view wx:elif="{{paired}}">
+    <view class="forecast-card" wx:if="{{periodWindow}}">
+      <text class="pill">预计经期前两天 · 温柔推荐</text>
+      <text class="forecast-copy">根据三次开始日期估算，预计 {{periodForecast.nextStart}} 左右开始。</text>
+    </view>
+    <view class="forecast-card" wx:elif="{{periodForecast && periodForecast.ready}}">
+      <text class="section-title">你们的周期小日历</text>
+      <text class="forecast-copy">预计下次开始：{{periodForecast.nextStart}} · 约 {{periodForecast.daysUntil}} 天后</text>
+      <text class="small muted">预计前两天会优先展示经期友好菜品。</text>
+    </view>
+    <view class="forecast-card" wx:else>
+      <text class="section-title">专属推荐即将准备好</text>
+      <text class="forecast-copy">女生在“我的”录入最近三次开始日期后，会自动推算周期。</text>
+    </view>
+
+    <view class="row between section-head">
+      <text class="section-title">{{periodWindow ? '适合经期的菜品' : '你们标记的经期友好菜'}}</text>
+      <text class="muted small">由你们自己挑选</text>
+    </view>
+    <view wx:if="{{!dishes.length}}" class="card empty">
+      <text>还没有标记经期友好菜品</text>
+      <text class="small muted">编辑菜品时打开“标记为经期友好”开关。</text>
+      <button class="soft-button empty-button" bindtap="goMenu">去看看菜单</button>
+    </view>
+    <view class="recommend-list" wx:else>
+      <view class="recommend-card" wx:for="{{dishes}}" wx:key="_id">
+        <image wx:if="{{item.photoUrl}}" class="recommend-photo" src="{{item.photoUrl}}" mode="aspectFill" />
+        <view wx:else class="recommend-photo photo-placeholder">🍲</view>
+        <view class="recommend-copy">
+          <text class="recommend-name">{{item.name}}</text>
+          <text class="small muted">{{item.category}} · {{item.minutes}} 分钟</text>
+          <text class="recommend-desc">{{item.description || '今天也要好好照顾自己。'}}</text>
+          <button wx:if="{{item.isAvailable}}" class="primary recommend-add" data-id="{{item._id}}" bindtap="add">点一份 ♡</button>
+        </view>
+      </view>
+    </view>
+  </view>
+  <text class="hint">周期预测仅用于日常安排；推荐菜品是你们共同标记的偏好，不是医疗建议。</text>
+</view>

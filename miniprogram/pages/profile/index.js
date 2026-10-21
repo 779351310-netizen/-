@@ -8,18 +8,24 @@ Page({
     profile: null,
     inviteCode: '',
     joinCode: '',
-    nickname: ''
+    nickname: '',
+    periodStarts: ['', '', ''],
+    periodForecast: null
   },
 
   onShow() { this.load(); },
   load() {
     const page = this;
     api.call('profile').then(function (data) {
+      const periodStarts = (data.periodStarts || []).slice(-3);
+      while (periodStarts.length < 3) periodStarts.unshift('');
       page.setData({
         paired: !!data.couple,
         couple: data.couple,
         profile: data.profile,
-        nickname: data.profile ? data.profile.nickname || '' : ''
+        nickname: data.profile ? data.profile.nickname || '' : '',
+        periodStarts: periodStarts,
+        periodForecast: data.periodForecast || null
       });
     }).catch(function (error) {
       wx.showToast({ title: error.message || '资料加载失败', icon: 'none' });
@@ -45,6 +51,30 @@ Page({
       wx.hideLoading();
       wx.showToast({ title: error.message || '创建失败', icon: 'none' });
     });
+  },
+
+  setGender(event) {
+    const page = this;
+    const gender = event.currentTarget.dataset.gender;
+    api.call('setGender', { gender: gender }).then(function () {
+      getApp().applyGenderTheme(gender);
+      page.load();
+      wx.showToast({ title: gender === 'female' ? '已切换淡粉主题' : '已切换淡蓝主题', icon: 'none' });
+    }).catch(function (error) { wx.showToast({ title: error.message || '主题切换失败', icon: 'none' }); });
+  },
+
+  periodDateChange(event) {
+    const periodStarts = this.data.periodStarts.slice();
+    periodStarts[Number(event.currentTarget.dataset.index)] = event.detail.value;
+    this.setData({ periodStarts: periodStarts });
+  },
+
+  savePeriodStarts() {
+    const page = this;
+    api.call('savePeriodStarts', { periodStarts: this.data.periodStarts }).then(function (data) {
+      page.setData({ periodStarts: data.periodStarts, periodForecast: data.periodForecast });
+      wx.showToast({ title: '周期记录已保存', icon: 'success' });
+    }).catch(function (error) { wx.showToast({ title: error.message || '保存失败', icon: 'none' }); });
   },
 
   inputCode(event) { this.setData({ joinCode: event.detail.value.toUpperCase() }); },
