@@ -1,0 +1,71 @@
+<view class="page {{gender === 'male' ? 'theme-blue' : ''}}">
+  <view class="hero">
+    <view class="row between">
+      <view>
+        <text class="eyebrow">只属于你们两个人</text>
+        <text class="hero-title">我们的小厨房</text>
+        <text class="hero-sub">把一起吃过的每一顿饭，好好收藏起来</text>
+      </view>
+      <view class="hero-heart">♡</view>
+    </view>
+    <view class="couple-row">
+      <view class="avatar">🍳</view>
+      <text class="heart">♥</text>
+      <view class="avatar second">🥣</view>
+    </view>
+    <view class="identity" wx:if="{{paired}}">
+      <view class="identity-icon">👩🏻‍🍳</view>
+      <view class="identity-copy">
+        <text>当前身份：{{profile.role === 'chef' ? '厨房主理人' : '今天吃什么'}}</text>
+        <text class="identity-sub">{{profile.nickname || '小可爱'}} · {{couple.memberCount}} 位成员</text>
+      </view>
+      <button class="identity-link" bindtap="goProfile">切换 ›</button>
+    </view>
+  </view>
+
+  <view class="card couple-card" wx:if="{{paired}}">
+    <view class="center-label">我们在一起吃饭已经</view>
+    <view class="days"><text>{{couple.daysTogether || '♡'}}</text><text class="days-unit">天</text></view>
+    <view class="date-line">{{couple.anniversaryDate || '今天也要好好吃饭'}}</view>
+  </view>
+
+  <view class="card setup-card" wx:if="{{!paired}}">
+    <view class="setup-icon">💌</view>
+    <text class="section-title">先把你们的厨房连在一起</text>
+    <text class="subtitle">创建专属厨房，再把邀请码发给另一半。</text>
+    <button class="primary setup-btn" bindtap="goProfile">去创建 / 加入厨房</button>
+  </view>
+
+  <view class="row between section-head">
+    <text class="section-title">今天吃点什么</text>
+    <text class="muted small" bindtap="goMenu">查看菜单 ›</text>
+  </view>
+
+  <view class="quick-grid">
+    <view class="quick-card" bindtap="goMenu">
+      <text class="quick-emoji">🍽️</text>
+      <text class="quick-title">厨房菜单</text>
+      <text class="quick-sub">{{dishes.length}} 道用心做的菜</text>
+    </view>
+    <view class="quick-card" bindtap="goOrders">
+      <text class="quick-emoji">🧾</text>
+      <text class="quick-title">点单记录</text>
+      <text class="quick-sub">{{pendingCount ? pendingCount + ' 份订单等你看看' : '一起吃饭的小记录'}}</text>
+    </view>
+  </view>
+
+  <view class="card recent-card" wx:if="{{orders.length}}">
+    <view class="row between">
+      <text class="section-title">最近一单</text>
+      <text class="pill">{{orders[0].statusLabel}}</text>
+    </view>
+    <text class="recent-time">{{orders[0].timeLabel}}</text>
+    <text class="recent-items">{{orders[0].summary}}</text>
+    <view class="row gap recent-actions">
+      <button class="soft-button" bindtap="goOrders">查看订单</button>
+      <button class="primary mini-primary" bindtap="goMenu">再点一份</button>
+    </view>
+  </view>
+
+  <view class="footer-note">把平凡的一餐，变成我们的小小纪念 ♡</view>
+</view>

@@ -1,0 +1,88 @@
+<view class="page {{profile && profile.gender === 'male' ? 'theme-blue' : ''}}">
+  <view class="profile-hero">
+    <view class="avatar-large">♡</view>
+    <text class="eyebrow">只属于你们的两人食堂</text>
+    <text class="title">我的小厨房</text>
+    <text class="subtitle" wx:if="{{paired}}">{{profile.nickname || '小可爱'}} · {{profile.role === 'chef' ? '厨房主理人' : '今天吃货'}}</text>
+    <text class="subtitle" wx:else>创建厨房，邀请另一半一起点餐</text>
+  </view>
+
+  <view class="card" wx:if="{{!paired}}">
+    <text class="section-title">开启你们的厨房</text>
+    <text class="subtitle">两个人用微信登录后，通过邀请码加入同一个小厨房。</text>
+    <button class="primary profile-action" bindtap="createPair">♡ 创建我们的厨房</button>
+    <view class="divider"></view>
+    <text class="label">另一半给你的邀请码</text>
+    <input class="field code-input" maxlength="6" placeholder="输入 6 位邀请码" value="{{joinCode}}" bindinput="inputCode" />
+    <button class="soft-button profile-action" bindtap="joinPair">加入厨房</button>
+  </view>
+
+  <view class="card" wx:if="{{paired}}">
+    <text class="section-title">性别与主题</text>
+    <text class="subtitle">女生使用淡粉色，男生使用淡蓝色。</text>
+    <view class="row gap gender-actions">
+      <button class="soft-button gender-button {{profile.gender === 'female' ? 'chosen' : ''}}" data-gender="female" bindtap="setGender">女生 · 淡粉</button>
+      <button class="soft-button gender-button blue-button {{profile.gender === 'male' ? 'chosen-blue' : ''}}" data-gender="male" bindtap="setGender">男生 · 淡蓝</button>
+    </view>
+    <view class="divider"></view>
+    <view class="row between">
+      <view>
+        <text class="section-title">今天轮到谁下厨？</text>
+        <text class="subtitle">可以随时切换两个人的角色。</text>
+      </view>
+      <text class="role-badge">{{profile.role === 'chef' ? '👩🏻‍🍳 主理人' : '🥢 吃货'}}</text>
+    </view>
+    <button class="soft-button profile-action" bindtap="switchRole">切换身份</button>
+    <view class="divider"></view>
+    <text class="label">你在小厨房里的称呼</text>
+    <view class="row gap">
+      <input class="field nickname-field" maxlength="10" placeholder="小可爱" value="{{nickname}}" bindinput="inputNickname" />
+      <button class="soft-button save-name" bindtap="saveNickname">保存</button>
+    </view>
+    <view class="invite-box">
+      <text class="small muted">邀请另一半的专属邀请码</text>
+      <text class="invite-code">{{couple.inviteCode}}</text>
+      <button class="soft-button copy-button" bindtap="copyInvite">复制邀请码</button>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{paired && profile.gender === 'female'}}">
+    <text class="section-title">生理期记录</text>
+    <text class="subtitle">录入最近三次开始日期，按平均周期推算下一次。日期仅向女生本人显示。</text>
+    <view class="period-date-row" wx:for="{{periodStarts}}" wx:for-index="index" wx:key="*this">
+      <text class="label">第 {{index + 1}} 次开始日期</text>
+      <picker mode="date" value="{{item}}" data-index="{{index}}" bindchange="periodDateChange">
+        <view class="field">{{item || '选择日期'}}　⌄</view>
+      </picker>
+    </view>
+    <button class="soft-button profile-action" bindtap="savePeriodStarts">保存三次记录</button>
+    <view class="forecast-card" wx:if="{{periodForecast && periodForecast.ready}}">
+      <text>平均周期约 <text class="forecast-number">{{periodForecast.averageCycleDays}}</text> 天</text>
+      <text>预计下次开始：{{periodForecast.nextStart}}（约 {{periodForecast.daysUntil}} 天后）</text>
+    </view>
+    <text class="hint">周期推算仅供日常安排参考，可能存在波动。</text>
+  </view>
+
+  <view class="card" wx:if="{{paired && profile.gender === 'male'}}">
+    <text class="section-title">周期温柔提醒</text>
+    <view class="forecast-card" wx:if="{{periodForecast && periodForecast.ready}}">
+      <text>预计下次生理期：{{periodForecast.nextStart}}</text>
+      <text>约 {{periodForecast.daysUntil}} 天后，推荐页会在前两天突出经期友好菜品。</text>
+    </view>
+    <text class="subtitle" wx:else>女生录入三次生理期开始日期后，推荐页会在预计前两天展示菜单推荐。</text>
+  </view>
+
+  <view class="card" wx:if="{{paired}}">
+    <view class="row between">
+      <view>
+        <text class="section-title">饭菜做好提醒</text>
+        <text class="subtitle">授权后，厨房出锅时微信会发来一条提醒。</text>
+      </view>
+      <text class="notification-icon">🔔</text>
+    </view>
+    <button class="soft-button profile-action" bindtap="subscribeReady">开启出锅提醒</button>
+    <text class="hint">需要先配置并审核通过微信订阅消息模板。</text>
+  </view>
+
+  <view class="footer">今天也要一起好好吃饭 ♡</view>
+</view>

@@ -1,0 +1,31 @@
+.profile-hero { display:flex; flex-direction:column; align-items:center; padding:34rpx 20rpx 20rpx; text-align:center; }
+.avatar-large { display:flex; align-items:center; justify-content:center; width:132rpx; height:132rpx; margin-bottom:20rpx; border:8rpx solid #fff; border-radius:50%; background:linear-gradient(145deg,#ffdbe0,#fff1e9); color:#e97789; font-size:62rpx; box-shadow:0 12rpx 30rpx rgba(174,119,111,.13); }
+.profile-action { width:100%; margin-top:22rpx; }
+.label { display:block; margin-top:12rpx; color:#725650; font-size:24rpx; font-weight:700; }
+.code-input { text-align:center; letter-spacing:6rpx; font-weight:700; }
+.role-badge { flex-shrink:0; padding:12rpx 16rpx; border-radius:28rpx; background:#fff0ef; color:#c77b79; font-size:21rpx; }
+.nickname-field { flex:1; }
+.save-name { flex-shrink:0; min-width:108rpx; min-height:78rpx; margin-top:12rpx; }
+.invite-box { display:flex; flex-direction:column; align-items:center; margin-top:26rpx; padding:22rpx; border-radius:26rpx; background:#fff7f5; }
+.invite-code { margin-top:8rpx; color:#ed7787; font-size:52rpx; font-weight:800; letter-spacing:10rpx; }
+.copy-button { min-height:62rpx; margin-top:12rpx; font-size:22rpx; }
+.notification-icon { font-size:42rpx; }
+.hint { display:block; margin-top:16rpx; color:#b09691; font-size:21rpx; line-height:1.5; }
+.footer { padding:34rpx 0; color:#bc9c96; text-align:center; font-size:22rpx; }
+
+.gender-actions { margin-top: 18rpx; }
+.gender-button { flex: 1; }
+.blue-button { border-color: #d6e8fb; background: #f0f7ff; color: #638bb6; }
+.period-date-row { margin-top: 12rpx; }
+.period-date-row .field { color: #725650; }
+.forecast-card { display: flex; flex-direction: column; gap: 10rpx; margin-top: 20rpx; padding: 22rpx; border-radius: 24rpx; background: #fff5f2; color: #8a6963; font-size: 24rpx; line-height: 1.5; }
+.forecast-number { color: #ed7787; font-size: 34rpx; font-weight: 800; }
+.theme-blue { background: #f2f8ff; }
+.theme-blue .title, .theme-blue .section-title { color: #3c526a; }
+.theme-blue .primary { background: linear-gradient(100deg, #8bb9ea, #6a9fd8); box-shadow: 0 10rpx 22rpx rgba(91, 143, 198, .18); }
+.theme-blue .soft-button { border-color: #d8e9fa; background: #eff7ff; color: #638bb6; }
+.theme-blue .forecast-card { background: #edf6ff; color: #627f9e; }
+.theme-blue .forecast-number { color: #6199d3; }
+
+.gender-button.chosen { background:#ffe6e8; border-color:#f6cbd0; color:#d86779; }
+.blue-button.chosen-blue { background:#e5f1ff; border-color:#c7ddf5; color:#5889bd; }

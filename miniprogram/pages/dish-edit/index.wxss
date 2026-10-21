@@ -1,0 +1,15 @@
+.photo-box { display:flex; align-items:center; justify-content:center; height:390rpx; margin-top:24rpx; overflow:hidden; border:2rpx dashed #f1c9c8; border-radius:32rpx; background:#fff0ef; }
+.photo-preview { width:100%; height:100%; }
+.photo-placeholder { display:flex; flex-direction:column; align-items:center; gap:12rpx; color:#bd807f; font-size:25rpx; }
+.photo-icon { display:flex; align-items:center; justify-content:center; width:88rpx; height:88rpx; border-radius:50%; background:#fff; font-size:48rpx; }
+.form-card { padding:28rpx; }
+.label { display:block; margin-top:14rpx; color:#6d514c; font-size:24rpx; font-weight:700; }
+.form-card > .label:first-child { margin-top:0; }
+.fields-row { align-items:flex-start; }
+.field-wrap { flex:1; min-width:0; }
+.picker-field { display:flex; align-items:center; min-height:82rpx; }
+.description { width:100%; height:170rpx; line-height:1.5; }
+.available-row { margin-top:26rpx; }
+.available-row .label { margin-top:0; }
+.available-row text { display:block; }
+.save-button { margin-top:25rpx; }

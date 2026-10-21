@@ -1,0 +1,65 @@
+<view class="page {{gender === 'male' ? 'theme-blue' : ''}}">
+  <view class="menu-heading">
+    <view>
+      <text class="eyebrow">今天的幸福菜单</text>
+      <text class="title">厨房菜单</text>
+      <text class="subtitle">{{dishes.length}} 道认真准备的菜</text>
+    </view>
+    <button wx:if="{{role === 'chef'}}" class="soft-button add-dish" bindtap="addDish">＋ 上架菜品</button>
+  </view>
+
+  <scroll-view class="category-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="category-row">
+      <view wx:for="{{categories}}" wx:key="*this" class="category {{category === item ? 'active' : ''}}" data-category="{{item}}" bindtap="chooseCategory">
+        {{item}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{loading}}" class="empty">正在把菜单端上来…</view>
+  <view wx:elif="{{!paired}}" class="card empty-card">
+    <text class="empty-emoji">💌</text>
+    <text class="section-title">先加入你们的小厨房</text>
+    <text class="subtitle">两个人配对后，就可以一起点餐啦。</text>
+    <button class="primary empty-button" bindtap="goProfile">去创建 / 加入</button>
+  </view>
+  <view wx:elif="{{!shown.length}}" class="card empty">
+    <text class="empty-emoji">🍰</text>
+    <text>这里还没有这类菜品</text>
+    <text class="small">厨房主理人可以从手机相册添加菜品照片</text>
+  </view>
+
+  <view class="dish-list" wx:else>
+    <view class="dish-card" wx:for="{{shown}}" wx:key="_id">
+      <image wx:if="{{item.photoUrl}}" class="dish-photo" src="{{item.photoUrl}}" mode="aspectFill" />
+      <view wx:else class="dish-photo photo-empty">🍲</view>
+      <view class="dish-copy">
+        <view class="row between dish-title-row">
+          <text class="dish-name">{{item.name}}</text>
+          <text class="pill status-pill">{{item.isAvailable ? '可点' : '暂不可点'}}</text>
+        </view>
+        <text class="dish-meta">{{item.category}} · {{item.minutes}} 分钟</text>
+        <text class="dish-description">{{item.description || '厨房还没写介绍，先尝尝看。'}}</text>
+        <view class="row between dish-bottom">
+          <text class="time-pill">♡ {{item.minutes}} 分钟</text>
+          <view class="row gap">
+            <button wx:if="{{role === 'chef'}}" class="icon-btn" data-id="{{item._id}}" bindtap="editDish">✎</button>
+            <button wx:if="{{item.isAvailable}}" class="add-btn" data-id="{{item._id}}" bindtap="add">＋ 点一份</button>
+            <button wx:elif="{{cart.length}}" class="icon-btn" data-id="{{item._id}}" bindtap="remove">−</button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="cart-note" wx:if="{{total}}">
+    <input class="field note-field" placeholder="给厨房留句话（选填）" value="{{note}}" bindinput="noteInput" />
+  </view>
+  <view class="cart-bar" wx:if="{{total}}">
+    <view>
+      <text class="cart-count">{{total}}</text>
+      <text class="cart-label"> 份小期待</text>
+    </view>
+    <button class="primary checkout-btn" bindtap="checkout">点好了，去下单 ›</button>
+  </view>
+</view>

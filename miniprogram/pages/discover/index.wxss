@@ -1,0 +1,13 @@
+.forecast-card { display:flex; flex-direction:column; gap:10rpx; margin-top:24rpx; padding:24rpx; border-radius:28rpx; background:#fff1ef; }
+.forecast-copy { color:#92756f; font-size:25rpx; line-height:1.55; }
+.recommend-list { display:flex; flex-direction:column; gap:18rpx; }
+.recommend-card { display:flex; gap:18rpx; padding:16rpx; border-radius:28rpx; background:#fff; box-shadow:0 10rpx 30rpx rgba(174,119,111,.07); }
+.recommend-photo { flex-shrink:0; width:190rpx; height:200rpx; border-radius:22rpx; }
+.photo-placeholder { display:flex; align-items:center; justify-content:center; background:#fff0ed; font-size:64rpx; }
+.recommend-copy { display:flex; flex:1; flex-direction:column; align-items:flex-start; gap:9rpx; min-width:0; }
+.recommend-name { font-size:28rpx; font-weight:800; }
+.recommend-desc { color:#7f625c; font-size:23rpx; line-height:1.5; }
+.recommend-add { min-height:64rpx; margin-top:auto; font-size:23rpx; }
+.empty-button { margin:18rpx auto 0; }
+.theme-blue .forecast-card { background:#edf6ff; }
+.theme-blue .recommend-card { border:1rpx solid #e1edf9; }
