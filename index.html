@@ -12,6 +12,7 @@
 .segments{display:flex;gap:7px;background:#fff;border-radius:21px;padding:6px;margin:16px 0}.segments button{flex:1;border:0;border-radius:17px;background:transparent;padding:13px 4px;color:var(--muted);font-weight:850}.segments button.active{background:var(--accent);color:#fff}.memory{background:#fff;border-radius:21px;padding:13px;margin:12px 0;box-shadow:var(--shadow)}.memory-head{display:flex;align-items:center;gap:9px}.memory-avatar{width:41px;height:41px;border-radius:50%;background:var(--accent-soft);display:grid;place-items:center;font-size:21px}.memory-head small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.stars{margin-left:auto;color:#e8798b;letter-spacing:2px}.memory h3{font-size:16px;margin:14px 0}.memory-photo{height:145px;border-radius:14px;background:linear-gradient(135deg,#f5d9be,#fff0e5,#e8c4b5);display:grid;place-items:center;font-size:55px;overflow:hidden}.memory-photo img{width:100%;height:100%;object-fit:cover}.profile-card{display:flex;align-items:center;gap:10px}.profile-card .textbtn{margin-left:auto}.period-list{display:flex;flex-direction:column;gap:9px;margin-top:10px}.period-row{background:var(--bg);border-radius:15px;padding:10px}.period-row>b{font-size:12px}.period-row label{display:block;margin-top:6px}
 
 .hero{height:300px;background-position:center 48%}.person{position:relative;z-index:1;text-align:center;margin-top:0;color:#fff;font-weight:900;text-shadow:0 1px 4px #43333f}.bigheart{font-size:30px;filter:drop-shadow(0 2px 3px #ad5962)}.role{position:absolute;z-index:2;left:13px;right:13px;bottom:13px;min-height:70px;padding:10px 12px;border-radius:21px;background:#fff0eaf2;display:flex;align-items:center;gap:9px;color:#604c48;font-size:12px;font-weight:750}.role small{font-size:12px}.role b{color:var(--accent);font-size:14px}.role-icon{font-size:25px;background:var(--accent-soft);border-radius:13px;padding:7px}.role button{margin-left:auto;border:0;border-radius:20px;background:#ffffffd9;padding:10px;color:#ac6a73;font-weight:850;white-space:nowrap}\n.hero .pair{display:none}.hero .person{position:absolute;z-index:2;left:14px;top:14px;padding:8px 12px;border-radius:18px;background:#fffdf0e8;color:#714f41;text-shadow:none;font-size:12px;font-weight:900}\n</style><style>
+.dish-form-backdrop{position:fixed;inset:0;z-index:20;background:#39272466;display:flex;align-items:flex-end;justify-content:center;padding:12px}.dish-form{width:min(480px,100%);max-height:92dvh;overflow:auto;background:var(--bg);border-radius:25px 25px 18px 18px;padding:18px;box-shadow:0 12px 40px #39272433}.dish-form-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.dish-form-head strong{font-size:19px}.dish-photo-pick{height:150px;margin:10px 0;border:0;border-radius:17px;background:var(--accent-soft);display:grid;place-items:center;overflow:hidden;color:var(--muted);font-size:14px;text-align:center;width:100%}.dish-photo-pick img{width:100%;height:100%;object-fit:cover}.dish-categories{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:8px 0 12px}.dish-categories button{border:1px solid var(--line);border-radius:14px;padding:11px;background:white;color:var(--muted);font-weight:800}.dish-categories button.selected{background:var(--accent);border-color:var(--accent);color:#fff}.dish-desc-head{display:flex;align-items:center;justify-content:space-between;margin-top:8px;font-size:13px;font-weight:800}.dish-desc-head button{border:0;border-radius:18px;padding:8px 12px;background:var(--accent-soft);color:var(--accent);font-weight:800}.dish-form textarea{min-height:76px;resize:vertical}.dish-form-actions{display:flex;gap:9px;margin-top:10px}.dish-form-actions button{flex:1;padding:13px}
 .role-pet{width:50px;height:50px;flex:none;border:2px solid #fff;border-radius:15px;background-size:330% auto;background-repeat:no-repeat;box-shadow:0 3px 10px #493a3720}
 body:not(.male) .menu-tools{display:none}
 .hero{background:none!important}
@@ -46,19 +47,20 @@ const defaults=[
 {id:'s4',name:'面条',cat:'主食',mins:15,desc:'热汤或拌面都很合适。',art:'noodles'},
 {id:'s5',name:'馕',cat:'主食',mins:20,desc:'烤得香香的圆馕，外酥内软。',art:'naan'},
 {id:'s6',name:'烤包子',cat:'主食',mins:30,desc:'外皮烤得金黄，里面满满馅料。',art:'bun'},
-{id:'d1',name:'炒鸡蛋',cat:'菜品',mins:10,desc:'嫩滑家常，简单又下饭。',art:'eggpan'},
-{id:'d2',name:'番茄牛腩',cat:'菜品',mins:90,desc:'番茄酸甜浓郁，牛腩炖到软烂。',art:'stew'},
-{id:'d3',name:'清炖牛肋条',cat:'菜品',mins:100,desc:'慢火清炖，保留牛肉的鲜香。',art:'ribs'},
-{id:'d4',name:'西红柿炒鸡蛋',cat:'菜品',mins:15,desc:'酸甜多汁，经典家常菜。',art:'tomatoegg'},
-{id:'d5',name:'黄瓜炒鸡蛋',cat:'菜品',mins:15,desc:'清爽脆嫩，蛋香柔和。',art:'cucumberegg'},
-{id:'d6',name:'素炒荷兰豆',cat:'菜品',mins:12,desc:'翠绿爽脆，清淡鲜甜。',art:'peas'},
+{id:'d1',name:'炒鸡蛋',cat:'家常菜',mins:10,desc:'嫩滑家常，简单又下饭。',art:'eggpan'},
+{id:'d2',name:'番茄牛腩',cat:'家常菜',mins:90,desc:'番茄酸甜浓郁，牛腩炖到软烂。',art:'stew'},
+{id:'d3',name:'清炖牛肋条',cat:'家常菜',mins:100,desc:'慢火清炖，保留牛肉的鲜香。',art:'ribs'},
+{id:'d4',name:'西红柿炒鸡蛋',cat:'家常菜',mins:15,desc:'酸甜多汁，经典家常菜。',art:'tomatoegg'},
+{id:'d5',name:'黄瓜炒鸡蛋',cat:'家常菜',mins:15,desc:'清爽脆嫩，蛋香柔和。',art:'cucumberegg'},
+{id:'d6',name:'素炒荷兰豆',cat:'家常菜',mins:12,desc:'翠绿爽脆，清淡鲜甜。',art:'peas'},
 {id:'c1',name:'黄瓜干豆腐',cat:'凉菜',mins:10,desc:'清脆黄瓜搭配豆香干豆腐。',art:'cucumbertofu'},
 {id:'c2',name:'凉拌菠菜',cat:'凉菜',mins:10,desc:'鲜嫩菠菜简单凉拌，清爽开胃。',art:'spinach'},
 {id:'c3',name:'菠金娃三拼',cat:'凉菜',mins:15,desc:'三种清爽小菜拼在一起，口感丰富。',art:'trio'}
 ];
 const get=(k,d)=>{try{return JSON.parse(localStorage.getItem('ck-'+k))??d}catch{return d}};
-let dishes=get('dishes',defaults),orders=get('orders',[]),cart=get('cart',{}),recipes=get('recipes',[]),outings=get('outings',[]),gender=get('gender','female'),outingDraftPhoto='',distanceCache={};
+let dishes=get('dishes',defaults),orders=get('orders',[]),cart=get('cart',{}),recipes=get('recipes',[]),outings=get('outings',[]),gender=get('gender','female'),outingDraftPhoto='',dishDraftPhoto='',distanceCache={};
 const menuVersion='2026-10-menu-refresh';if(get('menu-version','')!==menuVersion){dishes=defaults.map(d=>({...d}));cart={};localStorage.setItem('ck-menu-version',JSON.stringify(menuVersion));localStorage.setItem('ck-dishes',JSON.stringify(dishes));localStorage.setItem('ck-cart',JSON.stringify(cart))}
+let migratedDishCategories=false;dishes=dishes.map(d=>{if(d.cat==='菜品'){migratedDishCategories=true;return {...d,cat:'家常菜'}}return d});if(migratedDishCategories)localStorage.setItem('ck-dishes',JSON.stringify(dishes));
 let periods=get('periods',[{start:'',end:''},{start:'',end:''},{start:'',end:''}]),tab='home',cat='全部',query='',discoverMode='outings';
 periods=(Array.isArray(periods)?periods:[]).slice(0,3).map(x=>typeof x==='string'?{start:x,end:''}:{start:x?.start||'',end:x?.end||''});while(periods.length<3)periods.push({start:'',end:''});
 function persist(){localStorage.setItem('ck-dishes',JSON.stringify(dishes));localStorage.setItem('ck-orders',JSON.stringify(orders));localStorage.setItem('ck-cart',JSON.stringify(cart));localStorage.setItem('ck-recipes',JSON.stringify(recipes));localStorage.setItem('ck-outings',JSON.stringify(outings));localStorage.setItem('ck-gender',JSON.stringify(gender));localStorage.setItem('ck-periods',JSON.stringify(periods))}
@@ -110,7 +112,7 @@ function home(){
   '</section>';
 }
 function menu(){
-  let categories=['全部',...new Set(dishes.map(d=>d.cat))];
+  let categories=['全部',...new Set(['早餐','家常菜','主食','凉菜',...dishes.map(d=>d.cat).filter(c=>!['早餐','家常菜','主食','凉菜'].includes(c))])];
   let sorted=dishes.filter(d=>!d.deferred).concat(dishes.filter(d=>d.deferred).reverse());
   let rows=sorted.filter(d=>(cat==='全部'||d.cat===cat)&&(!query||d.name.includes(query)));
   document.getElementById('view').innerHTML='<section class="page menu-page"><div class="menutop"><div><div class="title">厨神菜单</div><div class="sub">'+dishes.length+' 道菜单菜品</div></div><button class="btn" onclick="setGender(\''+(gender==='male'?'female':'male')+'\')">切到'+(gender==='male'?'吃货':'厨师')+'</button></div>'+
@@ -229,10 +231,39 @@ function rateDish(orderId,itemKey,stars){if(gender!=='female')return toast('只�
 function place(){let items=dishes.filter(d=>cart[d.id]).map(d=>({id:d.id,name:d.name,qty:cart[d.id]}));if(!items.length)return;orders.unshift({id:String(Date.now()),items:items,status:'new',ratings:{},time:new Date().toLocaleString('zh-CN',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'})});cart={};persist();tab='orders';render();toast('下单成功，厨房收到啦 ♡')}
 function advance(id){let o=orders.find(x=>x.id===id);if(!o)return;if(o.status==='new'&&gender==='male'){o.status='cooking';toast('开始为宝宝做饭啦 ♡')}else if(o.status==='cooking'&&gender==='male'){o.status='ready';toast('饭菜做好啦，快叫宝宝来吃饭 💌')}else if(o.status==='ready'&&gender==='female'){o.status='done';o.ratings=o.ratings||{};toast('一起开饭啦 ♡')}else return toast(gender==='female'?'等大厨更新订单进度哦':'请按订单状态完成当前步骤');persist();orderPage()}
 function addDish(){
-  let name=prompt('菜品叫什么名字？');if(!name)return;
-  let d={id:String(Date.now()),name:name.trim(),cat:'家常菜',mins:20,desc:'为你认真准备的一道菜。',emoji:'🍳'};
-  let input=document.createElement('input');input.type='file';input.accept='image/*';input.onchange=()=>{let f=input.files[0];if(f){let rd=new FileReader();rd.onload=()=>{d.src=rd.result;finish()};rd.readAsDataURL(f)}else finish()};
-  function finish(){dishes.unshift(d);persist();tab='menu';render();toast('新菜品上架啦 ♡')}input.click();
+  if(gender!=='male')return toast('只有大厨可以添加菜品');
+  dishDraftPhoto='';dishDraftCategory='家常菜';
+  const categories=['早餐','家常菜','主食','凉菜'];
+  const form='<div class="dish-form-backdrop" id="dish-form-backdrop"><form class="dish-form" onsubmit="saveNewDish(event)"><div class="dish-form-head"><strong>添加一道新菜</strong><button type="button" class="textbtn" onclick="closeDishForm()">关闭</button></div><button type="button" class="dish-photo-pick" id="dish-photo-preview" onclick="document.getElementById(\'dish-photo-input\').click()">📷<br>拍照或上传菜品图片</button><input id="dish-photo-input" type="file" accept="image/*" capture="environment" hidden onchange="prepareDishPhoto(this)"><label class="hint" for="dish-name">菜名</label><input class="form" id="dish-name" maxlength="40" placeholder="例如：番茄牛腩" required><div class="hint">选择分类</div><div class="dish-categories">'+categories.map(c=>'<button type="button" class="'+(c==='家常菜'?'selected':'')+'" data-dish-category="'+c+'">'+c+'</button>').join('')+'</div><div class="dish-desc-head"><span>味道描述</span><button type="button" onclick="generateDishDescription()">生成描述建议</button></div><textarea class="form" id="dish-description" maxlength="120" placeholder="写下这道菜的口感和味道"></textarea><div class="hint">描述建议会按菜名和分类生成草稿，生成后可以修改。</div><div class="dish-form-actions"><button type="button" class="btn soft" onclick="closeDishForm()">取消</button><button type="submit" class="btn">保存并上架</button></div></form></div>';
+  document.body.insertAdjacentHTML('beforeend',form);
+  document.querySelectorAll('[data-dish-category]').forEach(button=>button.onclick=()=>selectDishCategory(button.dataset.dishCategory));
+  document.getElementById('dish-name').focus();
+}
+let dishDraftCategory='家常菜';
+function closeDishForm(){document.getElementById('dish-form-backdrop')?.remove();dishDraftPhoto=''}
+function selectDishCategory(category){dishDraftCategory=category;document.querySelectorAll('[data-dish-category]').forEach(button=>button.classList.toggle('selected',button.dataset.dishCategory===category))}
+function prepareDishPhoto(input){
+  const file=input.files&&input.files[0];if(!file)return;
+  if(!file.type.startsWith('image/'))return toast('请选择图片文件');
+  const reader=new FileReader();reader.onload=()=>{const image=new Image();image.onload=()=>{const scale=Math.min(1,1000/Math.max(image.width,image.height)),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(image.width*scale));canvas.height=Math.max(1,Math.round(image.height*scale));canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);dishDraftPhoto=canvas.toDataURL('image/jpeg',.8);document.getElementById('dish-photo-preview').innerHTML='<img src="'+dishDraftPhoto+'" alt="菜品照片预览">'};image.onerror=()=>toast('图片读取失败，请换一张试试');image.src=reader.result};reader.onerror=()=>toast('图片读取失败，请重试');reader.readAsDataURL(file);
+}
+function generateDishDescription(){
+  const name=document.getElementById('dish-name').value.trim();if(!name)return toast('先填写菜名，再生成描述');
+  let line;
+  if(/牛|肉|排骨|鸡翅|鱼|虾/.test(name))line='肉香鲜美，经过细心烹制后口感软嫩入味，热乎乎的一口很满足。';
+  else if(/蛋/.test(name))line='蛋香浓郁，口感软嫩细腻，简单调味就很鲜美。';
+  else if(/番茄|西红柿/.test(name))line='酸甜清新的汤汁裹着食材，滋味浓郁又很下饭。';
+  else if(/黄瓜|菠菜|青菜|荷兰豆|凉拌|凉菜/.test(name))line='口感清脆爽口，带着蔬菜的清新鲜甜，开胃不腻。';
+  else if(dishDraftCategory==='主食')line='谷物香气自然，口感软糯饱腹，搭配家常菜刚刚好。';
+  else if(dishDraftCategory==='早餐')line='香气温和，口感松软可口，作为一顿暖乎乎的早餐正合适。';
+  else line='香气扑鼻，口感丰富又家常，趁热吃特别满足。';
+  document.getElementById('dish-description').value=line;
+}
+function saveNewDish(event){
+  event.preventDefault();const name=document.getElementById('dish-name').value.trim(),desc=document.getElementById('dish-description').value.trim();if(!name)return toast('请填写菜名');
+  const d={id:String(Date.now()),name,cat:dishDraftCategory,mins:20,desc:desc||'为你认真准备的一道菜。',emoji:'🍳',...(dishDraftPhoto?{src:dishDraftPhoto}:{})};
+  dishes.unshift(d);try{persist()}catch(error){dishes.shift();return toast('保存失败，可能是手机存储空间不足，请换一张较小的图片')}
+  closeDishForm();tab='menu';cat='全部';render();toast('新菜品上架啦 ♡');
 }
 function go(t){tab=t;render()}
 function render(){tabs();if(tab==='home')home();else if(tab==='menu')menu();else if(tab==='discover')discover();else if(tab==='orders')orderPage();else profile()}
