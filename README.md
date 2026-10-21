@@ -1,4 +1,4 @@
-# 饮食男女 · 情侣厨房
+# 给娜的餐厅 · 情侣厨房
 
 A mobile-first couples meal planning and ordering demo.
 
@@ -20,3 +20,5 @@ This version stores menus, orders, ratings, outings, and role selection in the c
 - `mascot-kitchen.png`: original kitchen illustration used by the home page
 - `server.js`: local preview server
 - `server-lan.js`: LAN preview server
+- `make-qr.js`: QR image generator for a preview URL
+
