@@ -1,0 +1,42 @@
+<view class="page">
+  <view class="eyebrow">把喜欢的味道，放进你们的菜单</view>
+  <text class="title">添加一道菜</text>
+  <text class="subtitle">记下做法灵感，也可以上传手机里的成品照片。</text>
+
+  <view class="photo-box" bindtap="choosePhoto">
+    <image wx:if="{{photoPath}}" class="photo-preview" src="{{photoPath}}" mode="aspectFill" />
+    <view wx:else class="photo-placeholder">
+      <text class="photo-icon">＋</text>
+      <text>从相册选择 / 拍一张</text>
+      <text class="small muted">建议使用清晰的菜品照片</text>
+    </view>
+  </view>
+
+  <view class="card form-card">
+    <text class="label">菜品名字</text>
+    <input class="field" maxlength="24" placeholder="比如：番茄炒蛋" value="{{name}}" bindinput="nameInput" />
+    <view class="row gap fields-row">
+      <view class="field-wrap">
+        <text class="label">分类</text>
+        <picker mode="selector" range="{{categories}}" bindchange="categoryChange">
+          <view class="field picker-field">{{category}}　⌄</view>
+        </picker>
+      </view>
+      <view class="field-wrap">
+        <text class="label">制作时间</text>
+        <input class="field" type="number" value="{{minutes}}" bindinput="minutesInput" />
+      </view>
+    </view>
+    <text class="label">给另一半的小介绍</text>
+    <textarea class="field description" maxlength="120" placeholder="这道菜有什么特别？辣度、口感或推荐搭配…" value="{{description}}" bindinput="descriptionInput" />
+    <view class="row between available-row">
+      <view>
+        <text class="label">今天可以点</text>
+        <text class="small muted">暂时不做时，可以关闭这道菜</text>
+      </view>
+      <switch checked="{{isAvailable}}" color="#f17a8c" bindchange="toggleAvailable" />
+    </view>
+  </view>
+
+  <button class="primary save-button" loading="{{saving}}" bindtap="save">保存到我们的菜单 ♡</button>
+</view>

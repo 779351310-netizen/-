@@ -1,0 +1,15 @@
+.order-list { display:flex; flex-direction:column; gap:20rpx; }
+.order-card { padding:26rpx; border-radius:30rpx; background:#fff; box-shadow:0 10rpx 30rpx rgba(174,119,111,.07); }
+.order-title { display:block; color:#ec7888; font-size:31rpx; font-weight:800; }
+.order-time { display:block; margin-top:7rpx; color:#a58b86; font-size:21rpx; }
+.status-chip { padding:12rpx 18rpx; border-radius:30rpx; background:#fff0f1; color:#d2717d; font-size:21rpx; }
+.status-chip.done { background:#f2f8f0; color:#7c9b70; }
+.order-item { display:flex; align-items:center; gap:16rpx; margin-top:16rpx; padding:18rpx; border-radius:24rpx; background:#fff8f5; }
+.order-category { display:flex; align-items:center; justify-content:center; flex-shrink:0; width:78rpx; height:78rpx; border-radius:20rpx; background:#ffe8e2; color:#bd7a6d; font-size:20rpx; }
+.order-dish-copy { display:flex; flex:1; min-width:0; flex-direction:column; gap:7rpx; }
+.order-dish { color:#513c38; font-size:26rpx; font-weight:700; }
+.order-thumb { flex-shrink:0; width:78rpx; height:78rpx; border-radius:18rpx; }
+.note-line { margin-top:18rpx; color:#9f7c76; font-size:23rpx; }
+.order-actions { margin-top:20rpx; }
+.action-btn { flex:1; min-height:76rpx; font-size:25rpx; }
+.empty-emoji { display:block; margin-bottom:12rpx; font-size:55rpx; }

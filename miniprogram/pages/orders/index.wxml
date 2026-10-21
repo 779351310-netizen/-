@@ -1,0 +1,48 @@
+<view class="page">
+  <view class="eyebrow">每一份订单，都是一句“想和你一起吃”</view>
+  <text class="title">我们的点单记录</text>
+  <text class="subtitle">制作完成后刷新一下，就能看到厨房的好消息。</text>
+
+  <view wx:if="{{loading}}" class="empty">正在找你们的点单记录…</view>
+  <view wx:elif="{{!paired}}" class="card empty">
+    <text class="empty-emoji">💌</text>
+    <text class="section-title">加入你们的小厨房后开始点单</text>
+  </view>
+  <view wx:elif="{{!orders.length}}" class="card empty">
+    <text class="empty-emoji">🥣</text>
+    <text>还没有订单</text>
+    <text class="small">去菜单挑一道今天想吃的吧。</text>
+  </view>
+
+  <view wx:else class="order-list">
+    <view class="order-card" wx:for="{{orders}}" wx:key="_id">
+      <view class="row between">
+        <view>
+          <text class="order-title">{{item.statusLabel}}</text>
+          <text class="order-time">{{item.timeLabel}}</text>
+        </view>
+        <text class="status-chip {{item.status}}">{{item.statusLabel}}</text>
+      </view>
+
+      <view class="order-item" wx:for="{{item.items}}" wx:for-item="dish" wx:key="dishId">
+        <view class="order-category">{{dish.category || '菜品'}}</view>
+        <view class="order-dish-copy">
+          <text class="order-dish">{{dish.name}} ×{{dish.quantity}}</text>
+          <text class="small muted">{{dish.description || '好好享用这一餐'}}</text>
+        </view>
+        <image wx:if="{{dish.photoUrl}}" class="order-thumb" src="{{dish.photoUrl}}" mode="aspectFill" />
+      </view>
+
+      <view class="note-line" wx:if="{{item.note}}">小纸条：{{item.note}}</view>
+      <view class="row gap order-actions" wx:if="{{role === 'chef' && item.status === 'new'}}">
+        <button class="primary action-btn" data-id="{{item._id}}" data-status="cooking" bindtap="updateStatus">开始制作</button>
+      </view>
+      <view class="row gap order-actions" wx:if="{{role === 'chef' && item.status === 'cooking'}}">
+        <button class="primary action-btn" data-id="{{item._id}}" data-status="ready" bindtap="updateStatus">饭菜做好啦 ♡</button>
+      </view>
+      <view class="row gap order-actions" wx:if="{{item.status === 'ready'}}">
+        <button class="soft-button action-btn" data-id="{{item._id}}" data-status="done" bindtap="updateStatus">一起开饭</button>
+      </view>
+    </view>
+  </view>
+</view>

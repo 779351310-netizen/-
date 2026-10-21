@@ -1,0 +1,27 @@
+page {
+  min-height: 100%;
+  background: #fff8f6;
+  color: #503d39;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 28rpx;
+}
+view, text, image, button, input, textarea { box-sizing: border-box; }
+button { margin: 0; padding: 0; border: 0; background: transparent; line-height: inherit; }
+button::after { border: 0; }
+.page { padding: 28rpx 30rpx 48rpx; }
+.eyebrow { color: #b28e88; font-size: 24rpx; letter-spacing: 2rpx; }
+.title { display: block; margin-top: 8rpx; color: #493530; font-size: 42rpx; font-weight: 800; }
+.subtitle { display: block; margin-top: 10rpx; color: #9a7e78; font-size: 26rpx; line-height: 1.6; }
+.card { margin-top: 24rpx; padding: 28rpx; border-radius: 32rpx; background: #fff; box-shadow: 0 12rpx 34rpx rgba(174, 119, 111, .08); }
+.row { display: flex; align-items: center; }
+.between { justify-content: space-between; }
+.gap { gap: 18rpx; }
+.section-title { color: #503d39; font-size: 32rpx; font-weight: 750; }
+.muted { color: #a58b86; }
+.small { font-size: 23rpx; }
+.pill { display: inline-flex; align-items: center; padding: 9rpx 18rpx; border-radius: 30rpx; background: #fff0ef; color: #d2737e; font-size: 22rpx; }
+.primary { display: flex; align-items: center; justify-content: center; min-height: 88rpx; padding: 0 30rpx; border-radius: 48rpx; background: linear-gradient(100deg, #f58d98, #f36c82); color: #fff; font-size: 29rpx; font-weight: 700; box-shadow: 0 10rpx 22rpx rgba(238, 112, 133, .2); }
+.soft-button { display: flex; align-items: center; justify-content: center; min-height: 78rpx; padding: 0 24rpx; border: 2rpx solid #f7e5e2; border-radius: 42rpx; background: #fff7f6; color: #bd7775; font-size: 26rpx; font-weight: 650; }
+.field { width: 100%; margin-top: 12rpx; padding: 22rpx 24rpx; border: 2rpx solid #f7e9e7; border-radius: 22rpx; background: #fffaf9; color: #513d39; font-size: 28rpx; }
+.divider { height: 1rpx; margin: 22rpx 0; background: #f4eae8; }
+.empty { padding: 62rpx 20rpx; text-align: center; color: #a58b86; line-height: 1.8; }

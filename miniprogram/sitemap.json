@@ -1,0 +1,6 @@
+{
+  "desc": "情侣厨房小程序",
+  "rules": [
+    { "action": "allow", "page": "*" }
+  ]
+}
